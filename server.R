@@ -31,9 +31,8 @@ shinyServer(function(input, output) {
         input$study  
       })
       
-      output$titleCntrol <- renderUI({
-        
-        headerPanel(study_selected(),"flowWorkspace & flowViz")
+      output$titleCntrol <- renderText({
+        return( study_selected() )
       })
       
       gs_preloaded <- reactive({

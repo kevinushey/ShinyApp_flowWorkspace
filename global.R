@@ -1,5 +1,5 @@
 library(shiny)
-studies_path <- "~/ShinyApps/flowWorkspace/study"
+studies_path <- "data"
 studies <- list.dirs(studies_path,recursive=FALSE)
 studies <- basename(studies)[-7]
 
