@@ -312,7 +312,7 @@ shinyServer(function(input, output) {
        }
      }) 
     }
-     ,height = get_w_height_stats
+#     ,height = get_w_height_stats ## set height within ui.R
    )
  
     
@@ -383,12 +383,12 @@ shinyServer(function(input, output) {
                  , margin = TRUE
                  , bool = TRUE
                  , overlay = overlay
-                 ,layout=layout()
+                 , layout=layout()
         )
       )      
    })  
     
   }
-  ,height = get_w_height_gate
+#  ,height = get_w_height_gate ## set height in ui.R
   )
 })

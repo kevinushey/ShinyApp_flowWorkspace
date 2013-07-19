@@ -6,15 +6,15 @@ body {
 .cont {
   max-width: 1600px;
   margin: 0 auto;
+  overflow: hidden;
 }
 
 .header {
   margin: 0 auto;
   width: 100%;
-  background-color: #EFEFFA;
-  padding: 10px 0;
   margin-bottom: 10px;
-  border-radius: 10px;
+  text-align: center;
+  color: white;
 }
 
 .header h1 {
@@ -22,62 +22,48 @@ body {
 }
 
 .main {
-  display: table;
+  margin: 0 auto;
   width: 100%;
-  border-collapse: separate;
+  overflow: auto;
 }
 
 .sidebar {
-  width: auto;
-  display: table-cell;
+  max-width: 300px;
   background-color: #EFEFFA;
   padding: 10px;
   border-radius: 10px;
-  vertical-align: top;
+  float: left;
 }
 
-.column-separator {
-  display: table-cell;
-  min-width: 10px; /* prevents table cell from collapsing */
-  vertical-align: top;
+.gridster {
+  position: relative;
 }
 
-.row-separator {
-  display: table-cell;
-  height: 10px;
-  vertical-align: top;
+.gridster-container {
+  overflow: auto;
 }
 
-.mainpanel {
-  display: table-cell;
-  background-color: #EFEFFA;
-  padding: 10px;
+.gridster ul li {
+  background-color: #EFEFFA !important;
   border-radius: 10px;
-  vertical-align: top;
 }
 
-.subcontainer {
-  display: table-row;
-  width: 100%;
-  border-spacing: 10px;
+#summary {
+  height: inherit;
+  overflow: auto;
 }
 
-.left {
-  display: table-cell;
-  vertical-align: top;
-  width: 48%;
-  margin: 0 1%;
-  border-radius: 10px;
-  padding: 10px;
+#summary table {
   background-color: white;
 }
 
-.right {
-  display: table-cell;
-  vertical-align: top;
-  width: 48%;
-  margin: 0 1%;
-  border-radius: 10px;
-  padding: 10px;
-  background-color: white;
+#stats-controls * {
+  vertical-align: middle;
+  overflow: hidden;
+  float: left;
+  margin-right: 5px;
+}
+
+.blur {
+  opacity: .25;
 }

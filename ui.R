@@ -2,9 +2,22 @@
 ##100 subjects 20 placebo (need to get study variables csv)
 ##query by and condition on study variables and plot sepcific populations
 library(shinyIncubator)
+library(shinyGridster)
+
+width <- 500
+height <- 250
+
+marginx <- 16
+marginy <- 16
 
 shinyUI( bootstrapPage(
   
+  ## fancybox
+  includeCSS("www/fancybox/jquery.fancybox.css"),
+  includeScript("www/fancybox/jquery.fancybox.pack.js"),
+  includeScript("www/js/fancybox_scripts.js"),
+  
+  ## personal styles
   includeCSS("www/css/styles.css"),
   
   with( tags,
@@ -20,7 +33,7 @@ shinyUI( bootstrapPage(
       div( class="main",
         
         ## left sidebar -- filters and things
-        div( class="sidebar",
+        div( class="sidebar", style=paste0("margin-top: ", marginy, "px;"),
           
           ## select a study to visualize
           selectInput("study", "Studies:",
@@ -50,83 +63,55 @@ shinyUI( bootstrapPage(
           
         ), ## end filters
         
-        div( class="column-separator", '' ),
-        
-        ## main panel of displays
-        div( class="mainpanel",
-          
-          div( class="subcontainer",
+        div( class="gridster-container",
+          gridster( width=width, height=height, marginx=marginx, marginy=marginy,
             
-            div( class="left",
+            ## Gates
+            gridsterItem(row=1, col=1, sizex=1, sizey=3, 
               
-              ## gates
-              div( id="gates",
-                h4("Gates"),
-                checkboxInput("stats", "Show Proportions?", value=TRUE),
-                checkboxInput("isOverlay", "Overlay", value=FALSE),
-                conditionalPanel("input.isOverlay == true",
-                  uiOutput("overlayPopCntrol")
+              checkboxInput("stats", "Show Proportions?", value=TRUE),
+              checkboxInput("isOverlay", "Overlay", value=FALSE),
+              conditionalPanel( "input.isOverlay == true",
+                uiOutput("overlayPopCntrol")
+              ),
+              actionButton("actPlotGate", "plot"),
+              div(
+                plotOutput("gate_plot", width=width, height=height*3-70)
+              )
+            ),
+            
+            ## Gate Hierarchy
+            gridsterItem(row=1, col=2, sizex=1, sizey=1,
+              uiOutput("rootCntrol"),
+              plotOutput("gh_plot", width=width, height=height-70) ## compenstate for uiOutput
+            ),
+            
+            ## Stats
+            gridsterItem(row=2, col=2, sizex=1, sizey=1,
+              
+              div(
+                div( id="stats-controls",
+                  checkboxInput("boxplot", "boxplot", value=TRUE),
+                  uiOutput("axisCntrol"),
+                  actionButton("actPlotStats", "plot")
                 ),
-                actionButton("actPlotGate", "plot"),
-                plotOutput("gate_plot")
-              )
-              
-            ),
-            
-            div( class="column-separator", '' ),
-            
-            div( class="right",
-              
-              ## gate hierarchy
-              div( id="gates",
-                h4("Gate Hierarchy"),
-                uiOutput("rootCntrol"),
-                plotOutput("gh_plot")
-              )
-              
-            )
-            
-          ),
-          
-          div( class="row-separator", '' ),
-          
-          div( class="subcontainer",
-            
-            div( class="left",
-              
-              div( id="stats",
-                
-                ## stats
-                h4("Stats"),
-                checkboxInput("boxplot", "boxplot", value=TRUE),
-                uiOutput("axisCntrol"),
-                actionButton("actPlotStats", "plot"),
-                plotOutput("stats_plot", height="auto")
-                
+                plotOutput("stats_plot", width=width, height=height-70)
               )
             ),
             
-            div( class="column-separator", '' ),
-            
-            div( class="right",
-              div( id="summary",
-                
-                ## summary
-                h4("Summary"),
-                htmlOutput("summary")
-                
-              )
+            ## Summary
+            gridsterItem(row=3, col=2, sizex=1, sizey=1,
+              htmlOutput("summary")
             )
             
-            
-          )
+          ) ## end gridster
           
-        ) ## span10
+        ) ## end gridster-container
         
       )
       
     )
     
-  )
+  ) 
   
 ) )
